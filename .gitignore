@@ -1,0 +1,5 @@
+NillyCodePro.exe
+*.tmp
+*.log
+session.json
+settings.json
