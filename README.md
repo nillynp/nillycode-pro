@@ -1,62 +1,65 @@
-# NillyCode Pro — Ultra-Light Native Sublime-Style Code & Text Editor
+# NillyCode Pro | Free Windows Code Editor
 
-> **Πανάλαφρος (~103 KB!), 100% Native Windows Sublime-Style Code & Text Editor για Windows 10/11.**
-> **Αντικαθιστά Sublime Text (`58 MB`) + Windows Notepad (`18 MB`) = `76 MB` με μόλις `~0.10 MB` (740× ελαφρύτερο!), `0 MB` background RAM και `0` pop-ups αγοράς άδειας!**
->
-> **created by [Nilly graphics (Sotiris Christos)](https://nillygraphics.com/)**
+**Windows 10/11 · MIT · Δωρεάν 0€ / Free €0**
 
----
+Created by [Nilly graphics (Nillygraphics · Sotiris Christos)](https://nillygraphics.com/).
 
-## Γιατί NillyCode Pro;
+[Ελληνική σελίδα προϊόντος](https://nillygraphics.com/product/nillycode-pro/el/) · [English product page](https://nillygraphics.com/product/nillycode-pro/en/) · [GitHub Release v1.0](https://github.com/nillynp/nillycode-pro/releases/tag/v1.0)
 
-| Λύση | Μέγεθος στον δίσκο | RAM (ανοιχτό) | Background RAM | License Pop-ups | Zero Admin Portable |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| Sublime Text + Windows Notepad | **~76 MB** | 45–80 MB | 0 MB | Ναι (Sublime) | Όχι |
-| VS Code | **~450 MB** | 350–700 MB | 0 MB | Όχι | Όχι |
-| **NillyCode Pro** | **~0.10 MB (103 KB)** | **~30–50 MB** | **0 MB** | **Ποτέ (Δωρεάν 0€)** | **Ναι (100% Portable)** |
+## Ελληνικά
 
----
+Editor κώδικα με καρτέλες, minimap και αναζήτηση regex.
 
-## Δυνατότητες (Sublime Monokai Darkroom)
+[Κατέβασε το ενημερωμένο ZIP](https://github.com/nillynp/nillycode-pro/releases/download/v1.0/NillyCode-Pro-v1.0-Portable-SEO.zip)
 
-- **3 Αυθεντικά Θέματα Sublime Text:**
-  - **Monokai** *(κλασικό Sublime Text Dark `#272822`)*
-  - **Mariana** *(Sublime Text 4 Blue-Slate Dark `#303841`)*
-  - **Light Paper** *(καθαρό φωτεινό θέμα)*
-  - Αυτόματο **Dark Titlebar** στα Windows 10/11 & razor-sharp High-DPI rendering.
-- **Custom Sublime Interface:**
-  - **Custom-drawn Tabs** με χρωματική κουκκίδα γλώσσας, δείκτη μη αποθηκευμένων αλλαγών (`●`), κλείσιμο με μεσαίο κλικ, και δεξί κλικ μενού.
-  - **Διαδραστικό Minimap** δεξιά (click & drag scroll όπως στο Sublime Text).
-  - **Αρίθμηση γραμμών (Line Numbers)** με highlight της ενεργής γραμμής.
-  - **Πτυσσόμενο Sidebar (`Ctrl+B`)** για άνοιγμα ολόκληρων φακέλων project (`Ctrl+Shift+O`).
-- **Live Syntax Highlighting (15 Γλώσσες — Flicker-Free Visible-Range Engine):**
-  - `PHP`, `HTML`, `CSS/SCSS`, `JavaScript/TypeScript`, `JSON`, `C#`, `PowerShell`, `Batch`, `Python`, `SQL`, `XML/SVG`, `Markdown`, `INI/ENV`, `YAML`, `Plain Text`.
-  - Καθαρό `Ctrl+Z` Undo (ο χρωματισμός κώδικα δεν επηρεάζει ποτέ το ιστορικό Undo).
-- **Sublime Συντομεύσεις & Εργαλεία Παραγωγικότητας:**
-  - **Command Palette (`Ctrl+Shift+P`)** με fuzzy search για όλες τις εντολές
-  - **Κάτω Find & Replace Bar (`Ctrl+F` / `Ctrl+H`)** με Case-Sensitive (`Aa`), Regex (`.*`), μετρητή αποτελεσμάτων & Replace All
-  - **Go to Line (`Ctrl+G`)**, **Toggle Comment (`Ctrl+/`)**, **Block Indent (`Tab` / `Shift+Tab`)**, **Auto-Indent**
-  - **Duplicate Line (`Ctrl+Shift+D`)**, **Delete Line (`Ctrl+Shift+K`)**, **Move Line (`Alt+↑/↓`)**
-  - **Ενσωματωμένα Εργαλεία:** Format JSON / Minify JSON, **Diff Viewer** (σύγκριση 2 tabs), Sort Lines, Remove Duplicate Lines, Trim Whitespace, UPPER/lower/Title Case, Zoom (`Ctrl + Ροδέλα`), Word Wrap (`Alt+Z`)
-  - **Single-Instance Multi-Tab** (κάθε νέο αρχείο από τον Explorer ανοίγει ως νέο tab στο ίδιο παράθυρο!) + **Αυτόματη επαναφορά συνεδρίας (Session Restore)**
-  - **Πλήρης υποστήριξη Ελληνικών** (`UTF-8`, `UTF-8 BOM`, `UTF-16` & παλιά `Windows-1253` αρχεία + `CRLF`/`LF`).
+Περίπου 104 KB για το εκτελέσιμο. Το αρχικό Portable ZIP είναι 51,9 KiB. Το ZIP περιέχει τον κώδικα και τον installer. Ο installer δημιουργεί το εκτελέσιμο τοπικά.
 
----
+1. Αποσυμπίεσε το ZIP σε δικό του φάκελο.
+2. Τρέξε το `Install_NillyCodePro.bat` για την εγκατάσταση στον λογαριασμό σου.
 
-## Εγκατάσταση σε ΟΠΟΙΟΔΗΠΟΤΕ Windows 10/11 PC (100% Portable · Χωρίς Admin)
+### Συχνές ερωτήσεις
 
-1. Κατέβασε το **`NillyCode-Pro-v1.0-Portable.zip`** από τα Releases και αποσυμπίεσέ το όπου θες (π.χ. `C:\Tools\NillyCodePro`).
-2. Τρέξε με διπλό κλικ το **`Install_NillyCodePro.bat`** *(δεν απαιτεί δικαιώματα Administrator!)*.
-   - Μεταγλωττίζει αυτόματα το 100% native **`NillyCodePro.exe` (~103 KB)** με τον ενσωματωμένο .NET compiler των Windows (0 εξωτερικά DLLs / 0 downloads).
-   - Εγγράφει **59 formats** στο `Άνοιγμα με...`, προσθέτει **`Edit with NillyCode Pro`** στο δεξί κλικ του Explorer, και φτιάχνει συντομεύσεις σε Desktop & Start Menu.
-3. Στις **Ρυθμίσεις Windows → Προεπιλεγμένες εφαρμογές → NillyCode Pro**, διάλεξε όποια formats θες να ανοίγουν με διπλό κλικ!
+**Τι αρχεία ανοίγει το NillyCode Pro;**
 
-### Απεγκατάσταση
-Τρέξε το **`Uninstall_NillyCodePro.bat`** — αφαιρεί καθαρά μόνο τις εγγραφές & συντομεύσεις χωρίς να αγγίξει κανένα αρχείο σου.
+Ανοίγει αρχεία απλού κειμένου και κώδικα όπως HTML, CSS, JavaScript, PHP, JSON και Python.
 
----
+**Πώς ανοίγω έναν φάκελο έργου;**
 
-## Πιστώσεις & Άδεια
-- **Δημιουργός:** **created by [Nilly graphics (Sotiris Christos)](https://nillygraphics.com/)**
-- **Άδεια:** MIT License — **100% Δωρεάν (0€)**
-- **Οικοσύστημα Nilly (Δωρεάν Εργαλεία):** [NillyView Pro (Image & RAW Studio)](https://github.com/nillynp/nillyview-pro) · [NillyDoc Pro (PDF Studio)](https://github.com/nillynp/nillydoc-pro) · [Nilly PC Manager & Tools](https://github.com/nillynp/nilly-pc-manager-tools)
+Άνοιξε τον φάκελο από την εφαρμογή και επίλεξε τα αρχεία του από το πλαϊνό δέντρο. Μπορείς να κρατάς ανοιχτά πολλά αρχεία σε καρτέλες.
+
+**Πώς το εγκαθιστώ στα Windows 10/11;**
+
+Αποσυμπίεσε το ZIP και εκτέλεσε το Install_NillyCodePro.bat. Ο installer μεταγλωττίζει την εφαρμογή τοπικά με το .NET Framework.
+
+## English
+
+Code editor with tabs, a minimap and regex search.
+
+[Download the updated ZIP](https://github.com/nillynp/nillycode-pro/releases/download/v1.0/NillyCode-Pro-v1.0-Portable-SEO.zip)
+
+The executable is approximately 104 KB. The original portable ZIP is 51.9 KiB. The ZIP includes the source and an installer that builds the executable locally.
+
+1. Extract the ZIP to its own folder.
+2. Run `Install_NillyCodePro.bat` to set it up for your Windows user.
+
+### Frequently asked questions
+
+**What files can NillyCode Pro open?**
+
+It opens plain text and source files such as HTML, CSS, JavaScript, PHP, JSON and Python.
+
+**How do I open a project folder?**
+
+Open the folder in the app and choose files from the sidebar. You can keep several files open in tabs.
+
+**How do I set it up on Windows 10/11?**
+
+Extract the ZIP and run Install_NillyCodePro.bat. The installer builds the app locally using Windows .NET Framework.
+
+## Περισσότερα εργαλεία / More tools
+
+[NillyCalc Pro](https://github.com/nillynp/nillycalc-pro) · [NillyBatch Pro](https://github.com/nillynp/nillybatch-pro) · [NillyMedia Lite](https://github.com/nillynp/nillymedia-lite)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
