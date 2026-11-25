@@ -26,8 +26,8 @@ using System.Windows.Forms;
 [assembly: AssemblyCompany("Nilly graphics (Sotiris Christos) — https://nillygraphics.com/")]
 [assembly: AssemblyProduct("NillyCode Pro")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Nilly graphics (Sotiris Christos)")]
-[assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 namespace NillyCodePro
 {
@@ -1680,6 +1680,13 @@ namespace NillyCodePro
             mFile.DropDownItems.Add(MakeItem("Save As...", "Ctrl+Shift+S", delegate { SaveActiveTab(true); }));
             mFile.DropDownItems.Add(MakeItem("Save All", "Ctrl+Alt+S", delegate { SaveAllTabs(); }));
             mFile.DropDownItems.Add(new ToolStripSeparator());
+            string noteExe = FindSiblingExe("NillyNotePro", "NillyNotePro.exe");
+            if (noteExe != null)
+                mFile.DropDownItems.Add(MakeItem("↗ Open in NillyNote Pro", "", delegate { SendActiveToNote(noteExe); }));
+            string filesExe = FindSiblingExe("NillyFilesPro", "NillyFilesPro.exe");
+            if (filesExe != null)
+                mFile.DropDownItems.Add(MakeItem("📂 Reveal Folder in NillyFiles Pro", "", delegate { OpenActiveFolderInFiles(filesExe); }));
+            mFile.DropDownItems.Add(new ToolStripSeparator());
             mFile.DropDownItems.Add(MakeItem("Close File", "Ctrl+W", delegate { CloseTab(_activeIdx); }));
             mFile.DropDownItems.Add(MakeItem("Close All Files", "", delegate { CloseAllTabs(); }));
             mFile.DropDownItems.Add(new ToolStripSeparator());
@@ -3187,29 +3194,87 @@ namespace NillyCodePro
             }
         }
 
+        private static string FindSiblingExe(string folder, string exeName)
+        {
+            try
+            {
+                string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"NillySuite\" + folder + @"\" + exeName);
+                if (File.Exists(appData)) return appData;
+                DirectoryInfo par = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\'));
+                if (par != null)
+                {
+                    string sib = Path.Combine(Path.Combine(par.FullName, folder), exeName);
+                    if (File.Exists(sib)) return sib;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        private void SendActiveToNote(string noteExe)
+        {
+            try
+            {
+                string path = null;
+                if (_activeIdx >= 0 && _activeIdx < _tabs.Count && !string.IsNullOrEmpty(_tabs[_activeIdx].FilePath) && File.Exists(_tabs[_activeIdx].FilePath))
+                    path = _tabs[_activeIdx].FilePath;
+                if (path == null)
+                {
+                    path = Path.Combine(Path.GetTempPath(), "NillyCode_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt");
+                    File.WriteAllText(path, _editor.Text ?? "", new UTF8Encoding(false));
+                }
+                Process.Start(new ProcessStartInfo(noteExe, "\"" + path + "\"") { WorkingDirectory = Path.GetDirectoryName(noteExe), UseShellExecute = true });
+            }
+            catch { }
+        }
+
+        private void OpenActiveFolderInFiles(string filesExe)
+        {
+            try
+            {
+                string dir = null;
+                if (_activeIdx >= 0 && _activeIdx < _tabs.Count && !string.IsNullOrEmpty(_tabs[_activeIdx].FilePath))
+                    dir = Path.GetDirectoryName(_tabs[_activeIdx].FilePath);
+                if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir)) dir = _openedFolder;
+                if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
+                    Process.Start(new ProcessStartInfo(filesExe, "\"" + dir + "\"") { WorkingDirectory = Path.GetDirectoryName(filesExe), UseShellExecute = true });
+            }
+            catch { }
+        }
+
         private void LoadSession()
         {
             try
             {
-                if (!File.Exists(SessionFile)) return;
-                string[] lines = File.ReadAllLines(SessionFile, Encoding.UTF8);
-                int active = 0;
-                for (int i = 0; i < lines.Length; i++)
+                string suiteTheme = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"NillySuite\suite.theme");
+                bool hasLocal = File.Exists(SessionFile);
+                if (hasLocal)
                 {
-                    int eq = lines[i].IndexOf('=');
-                    if (eq <= 0) continue;
-                    string k = lines[i].Substring(0, eq).Trim();
-                    string v = lines[i].Substring(eq + 1).Trim();
-                    if (k == "Theme") _theme = EditorTheme.ByName(v);
-                    else if (k == "FontSize") { float fs; if (float.TryParse(v, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out fs)) SetFontSize(fs); }
-                    else if (k == "Minimap") { _showMinimap = (v == "1"); _minimap.Visible = _showMinimap; }
-                    else if (k == "WordWrap") { _wordWrap = (v == "1"); _editor.WordWrap = _wordWrap; }
-                    else if (k == "Folder" && Directory.Exists(v)) OpenFolderInSidebar(v);
-                    else if (k == "Sidebar") { _showSidebar = (v == "1"); _sidebarPanel.Visible = _showSidebar; _splitter.Visible = _showSidebar; }
-                    else if (k == "Tab" && File.Exists(v)) OpenFileInTab(v);
-                    else if (k == "ActiveIndex") { int ai; if (int.TryParse(v, out ai)) active = ai; }
+                    string[] lines = File.ReadAllLines(SessionFile, Encoding.UTF8);
+                    int active = 0;
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        int eq = lines[i].IndexOf('=');
+                        if (eq <= 0) continue;
+                        string k = lines[i].Substring(0, eq).Trim();
+                        string v = lines[i].Substring(eq + 1).Trim();
+                        if (k == "Theme") _theme = EditorTheme.ByName(v);
+                        else if (k == "FontSize") { float fs; if (float.TryParse(v, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out fs)) SetFontSize(fs); }
+                        else if (k == "Minimap") { _showMinimap = (v == "1"); _minimap.Visible = _showMinimap; }
+                        else if (k == "WordWrap") { _wordWrap = (v == "1"); _editor.WordWrap = _wordWrap; }
+                        else if (k == "Folder" && Directory.Exists(v)) OpenFolderInSidebar(v);
+                        else if (k == "Sidebar") { _showSidebar = (v == "1"); _sidebarPanel.Visible = _showSidebar; _splitter.Visible = _showSidebar; }
+                        else if (k == "Tab" && File.Exists(v)) OpenFileInTab(v);
+                        else if (k == "ActiveIndex") { int ai; if (int.TryParse(v, out ai)) active = ai; }
+                    }
+                    if (_tabs.Count > 0 && active >= 0 && active < _tabs.Count) SwitchToTab(active);
                 }
-                if (_tabs.Count > 0 && active >= 0 && active < _tabs.Count) SwitchToTab(active);
+                if (File.Exists(suiteTheme) && (!hasLocal || File.GetLastWriteTimeUtc(suiteTheme) > File.GetLastWriteTimeUtc(SessionFile)))
+                {
+                    string s = File.ReadAllText(suiteTheme, Encoding.ASCII).Trim();
+                    if (s.Equals("light", StringComparison.OrdinalIgnoreCase)) _theme = EditorTheme.ByName("Light");
+                    else if (s.Equals("dark", StringComparison.OrdinalIgnoreCase) && !_theme.IsDark) _theme = EditorTheme.ByName("Monokai");
+                }
             }
             catch { }
         }
