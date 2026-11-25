@@ -14,8 +14,8 @@ Stop-Process -Name 'NillyCodePro' -Force -ErrorAction SilentlyContinue
 Remove-Item -Path 'HKCU:\Software\Classes\NillyCodePro.Document' -Recurse -Force
 Remove-Item -Path 'HKCU:\Software\Classes\Applications\NillyCodePro.exe' -Recurse -Force
 Remove-Item -Path 'HKCU:\Software\NillyGraphics\NillyCodePro' -Recurse -Force
-Remove-Item -Path 'HKCU:\Software\Classes\*\shell\NillyCodePro' -Recurse -Force
-Remove-Item -Path 'HKCU:\Software\Classes\Directory\shell\NillyCodePro' -Recurse -Force
+& reg.exe delete "HKCU\Software\Classes\*\shell\NillyCodePro" /f 2>$null | Out-Null
+Remove-Item -LiteralPath 'HKCU:\Software\Classes\Directory\shell\NillyCodePro' -Recurse -Force
 Remove-ItemProperty -Path 'HKCU:\Software\RegisteredApplications' -Name 'NillyCodePro' -Force
 
 # Clean OpenWithProgids entries
@@ -34,7 +34,7 @@ if (Test-Path $startLnk) { Remove-Item $startLnk -Force }
 
 try {
     Add-Type -Namespace NillyCodeShell -Name Notify -MemberDefinition '[System.Runtime.InteropServices.DllImport("shell32.dll")] public static extern void SHChangeNotify(int wEventId, int uFlags, System.IntPtr dwItem1, System.IntPtr dwItem2);' -ErrorAction SilentlyContinue
-    [NillyCodeShell.Notify]::SHChangeNotify(0x08000000, 0, [IntPtr]::Zero, [IntPtr]::Zero)
+    [NillyCodeShell.Notify]::SHChangeNotify(0x08000000, 0x2000, [IntPtr]::Zero, [IntPtr]::Zero)
 } catch {}
 
 Write-Host '  OK -> Αφαιρέθηκαν καθαρά όλες οι εγγραφές & συντομεύσεις του NillyCode Pro.' -ForegroundColor Green

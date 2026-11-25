@@ -99,21 +99,23 @@ New-Item -Path 'HKCU:\Software\RegisteredApplications' -Force | Out-Null
 Set-ItemProperty -Path 'HKCU:\Software\RegisteredApplications' -Name 'NillyCodePro' -Value 'Software\NillyGraphics\NillyCodePro\Capabilities'
 
 # Windows Explorer Right-Click Context Menu: "Edit with NillyCode Pro" & "Open Folder in NillyCode Pro"
-$fileCtx = 'HKCU:\Software\Classes\*\shell\NillyCodePro'
-New-Item -Path "$fileCtx\command" -Force | Out-Null
-Set-ItemProperty -Path $fileCtx -Name '(Default)' -Value 'Edit with NillyCode Pro'
-Set-ItemProperty -Path $fileCtx -Name 'Icon' -Value $iconRef
-Set-ItemProperty -Path "$fileCtx\command" -Name '(Default)' -Value $openCmd
+# Use .NET Registry API for '*' key so PowerShell never treats '*' as a wildcard glob!
+$kFile = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey('Software\Classes\*\shell\NillyCodePro')
+$kFile.SetValue('', 'Edit with NillyCode Pro')
+$kFile.SetValue('Icon', $iconRef)
+$kFileCmd = $kFile.CreateSubKey('command')
+$kFileCmd.SetValue('', $openCmd)
+$kFileCmd.Close(); $kFile.Close()
 
 $dirCtx = 'HKCU:\Software\Classes\Directory\shell\NillyCodePro'
 New-Item -Path "$dirCtx\command" -Force | Out-Null
-Set-ItemProperty -Path $dirCtx -Name '(Default)' -Value 'Open Folder in NillyCode Pro'
-Set-ItemProperty -Path $dirCtx -Name 'Icon' -Value $iconRef
-Set-ItemProperty -Path "$dirCtx\command" -Name '(Default)' -Value "`"$exePath`" `"%V`""
+Set-ItemProperty -LiteralPath $dirCtx -Name '(Default)' -Value 'Open Folder in NillyCode Pro'
+Set-ItemProperty -LiteralPath $dirCtx -Name 'Icon' -Value $iconRef
+Set-ItemProperty -LiteralPath "$dirCtx\command" -Name '(Default)' -Value "`"$exePath`" `"%V`""
 
 try {
     Add-Type -Namespace NillyCodeShell -Name Notify -MemberDefinition '[System.Runtime.InteropServices.DllImport("shell32.dll")] public static extern void SHChangeNotify(int wEventId, int uFlags, System.IntPtr dwItem1, System.IntPtr dwItem2);' -ErrorAction SilentlyContinue
-    [NillyCodeShell.Notify]::SHChangeNotify(0x08000000, 0, [IntPtr]::Zero, [IntPtr]::Zero)
+    [NillyCodeShell.Notify]::SHChangeNotify(0x08000000, 0x2000, [IntPtr]::Zero, [IntPtr]::Zero)
 } catch {}
 
 Write-Host ("        OK -> Εγγράφηκαν " + $allExts.Count + " formats + δεξί κλικ «Edit with NillyCode Pro»!") -ForegroundColor Green
