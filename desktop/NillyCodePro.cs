@@ -26,8 +26,8 @@ using System.Windows.Forms;
 [assembly: AssemblyCompany("Nilly graphics (Sotiris Christos) — https://nillygraphics.com/")]
 [assembly: AssemblyProduct("NillyCode Pro")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Nilly graphics (Sotiris Christos)")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("1.1.2.0")]
+[assembly: AssemblyFileVersion("1.1.2.0")]
 
 namespace NillyCodePro
 {
@@ -1685,7 +1685,7 @@ namespace NillyCodePro
                 mFile.DropDownItems.Add(MakeItem("↗ Open in NillyNote Pro", "", delegate { SendActiveToNote(noteExe); }));
             string filesExe = FindSiblingExe("NillyFilesPro", "NillyFilesPro.exe");
             if (filesExe != null)
-                mFile.DropDownItems.Add(MakeItem("📂 Reveal Folder in NillyFiles Pro", "", delegate { OpenActiveFolderInFiles(filesExe); }));
+                mFile.DropDownItems.Add(MakeItem("Reveal Folder in NillyFiles Pro", "", delegate { OpenActiveFolderInFiles(filesExe); }));
             mFile.DropDownItems.Add(new ToolStripSeparator());
             mFile.DropDownItems.Add(MakeItem("Close File", "Ctrl+W", delegate { CloseTab(_activeIdx); }));
             mFile.DropDownItems.Add(MakeItem("Close All Files", "", delegate { CloseAllTabs(); }));
