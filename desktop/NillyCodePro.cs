@@ -26,8 +26,8 @@ using System.Windows.Forms;
 [assembly: AssemblyCompany("Nilly graphics (Sotiris Christos) — https://nillygraphics.com/")]
 [assembly: AssemblyProduct("NillyCode Pro")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Nilly graphics (Sotiris Christos)")]
-[assembly: AssemblyVersion("1.1.3.0")]
-[assembly: AssemblyFileVersion("1.1.3.0")]
+[assembly: AssemblyVersion("1.1.4.0")]
+[assembly: AssemblyFileVersion("1.1.4.0")]
 
 namespace NillyCodePro
 {
@@ -698,7 +698,7 @@ namespace NillyCodePro
             using (Pen bottomLine = new Pen(Theme.BorderLine))
                 g.DrawLine(bottomLine, 0, this.Height - 1, this.Width, this.Height - 1);
 
-            for (int i = 0; i < Tabs.Count; i++)
+            for (int i = 0; i < Tabs.Count && i < _tabRects.Count; i++)
             {
                 DocTab tab = Tabs[i];
                 Rectangle r = _tabRects[i];
@@ -1104,9 +1104,10 @@ namespace NillyCodePro
 
             if (Editor == null || !Editor.IsHandleCreated) return;
             string[] lines = Editor.Lines;
-            int total = Math.Max(1, lines.Length);
+            int lineCount = (lines != null) ? lines.Length : 0;
+            int total = Math.Max(1, lineCount);
 
-            int firstVis = Editor.GetFirstVisibleLine();
+            int firstVis = Math.Max(0, Editor.GetFirstVisibleLine());
             int visCount = Math.Max(1, Editor.Height / Math.Max(14, (int)Math.Ceiling(Editor.Font.GetHeight(g))));
 
             // How many lines fit in minimap (3 px pitch)
@@ -1117,9 +1118,9 @@ namespace NillyCodePro
             {
                 float ratio = (float)firstVis / Math.Max(1, total - visCount);
                 ratio = Math.Max(0f, Math.Min(1f, ratio));
-                mapStartLine = (int)(ratio * (total - maxDrawable));
+                mapStartLine = Math.Max(0, (int)(ratio * (total - maxDrawable)));
             }
-            int mapEndLine = Math.Min(total, mapStartLine + maxDrawable);
+            int mapEndLine = Math.Min(lineCount, mapStartLine + maxDrawable);
 
             using (SolidBrush codeB = new SolidBrush(Color.FromArgb(115, Theme.EditorFg)))
             using (SolidBrush kwB = new SolidBrush(Color.FromArgb(135, Theme.SynKeyword)))
